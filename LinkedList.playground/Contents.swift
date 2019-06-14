@@ -129,3 +129,75 @@ myFirstLinkedList.insertToMiddle(value: 0)
 print(myFirstLinkedList.description)
 myFirstLinkedList.shift1Over()
 print(myFirstLinkedList.description)
+
+
+//let threeNode = Node(value: 3)
+//let eightNode = Node(value: 8)
+//let fourNode = Node(value: 4)
+//let oneNode = Node(value: 1)
+//threeNode.next = eightNode
+//eightNode.previous = threeNode
+//eightNode.next = fourNode
+//fourNode.previous = eightNode
+//fourNode.next = oneNode
+//oneNode.previous = oneNode
+
+var myLL = LinkedList<Int>()
+myLL.append(value: 3)
+myLL.append(value: 8)
+myLL.append(value: 4)
+myLL.append(value: 1)
+print(myLL)
+
+func reverseLL(LL: LinkedList<Int>) -> LinkedList<Int> {
+    guard let head = LL.first else { return LL }
+    let newLL = LinkedList<Int>()
+    newLL.append(value: head.value)
+    var currentNode = head
+    while let next = currentNode.next {
+        newLL.insertToBeginning(value: next.value)
+        currentNode = next
+    }
+    return newLL
+}
+print(reverseLL(LL: myLL))
+
+
+
+//Given the head node of a singly linked list, swap each pair of nodes and return the head. If there is a last odd node leave it in place.
+//func swap(headNode: Node<Int>) -> LinkedList<Int> {
+//    var newLL = LinkedList<Int>()
+////    newLL.
+//    guard let next = headNode.next else {
+//        newLL.append(value: headNode.value)
+//        return newLL
+//    }
+//    var currentNode = headNode
+//
+//    
+//    return newLL
+//}
+
+func removeDupes(LL: inout LinkedList<Int>) {
+    guard let head = LL.first else { return }
+    var storageDictionary = [Int:Bool]()
+    var previousNode = head
+    var currentNode = head
+    while let next = currentNode.next {
+        if let _ = storageDictionary[currentNode.value] {
+            previousNode.next = next
+        } else {
+            storageDictionary[currentNode.value] = true
+        }
+        previousNode = currentNode
+        currentNode = next
+    }
+}
+
+var yourLL = LinkedList<Int>()
+yourLL.append(value: 3)
+yourLL.append(value: 8)
+yourLL.append(value: 4)
+yourLL.append(value: 1)
+yourLL.append(value: 3)
+print(yourLL)
