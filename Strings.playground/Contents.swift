@@ -33,7 +33,7 @@ let myCustomSet = CharacterSet.init(charactersIn: ":D")
 
 //removing substring
 let result2 = String(testString.unicodeScalars.filter{ !myCustomSet.contains($0) })
-print(result2)
+print("result2 is \(result2)")
 
 for char in testString {
     if char.isLetter && !char.isWhitespace {
@@ -245,3 +245,37 @@ public func encryptMessage(str: String, byRotation rotation: Int) -> String {
 
 let messageInput = "middle-Outz"
 print(encryptMessage(str: messageInput, byRotation: 2))
+
+func removeDupes(string: String) -> String {
+    var storageDictionary = [String:Bool]()
+    var returnString = ""
+    for char in string {
+        let charAsString = String(char)
+        if storageDictionary[charAsString] == nil {
+            storageDictionary[charAsString] = true
+            returnString += charAsString
+        }
+    }
+    return returnString
+}
+print(removeDupes(string: "mississippi"))
+
+func reverseAString(str: String) -> String {
+    var returnStr = ""
+    for num in 1...str.count {
+        let endIndex = str.index(str.endIndex, offsetBy: -num)
+        returnStr += String(str[endIndex])
+    }
+    return returnStr
+}
+print(reverseAString(str: "hello"))
+
+func anotherWayToReverse(str: String) -> String {
+    var returnStr = ""
+    for char in str {
+        returnStr = "\(char)\(returnStr)"
+    }
+    return returnStr
+}
+
+print(anotherWayToReverse(str: "world"))
