@@ -67,3 +67,45 @@ func fizzBuzz(x: Int) {
 fizzBuzz(x: 20)
 
 
+
+let testStr = "   how  about     these    whtiespaces ? "
+func deleteWhiteSpaces(str: String) -> String {
+    var result = ""
+    var hasSpace = false
+    for char in str {
+        if char.isWhitespace {
+            if hasSpace {
+                continue
+            }
+            hasSpace = true
+        } else {
+            hasSpace = false
+        }
+        result.append(char)
+    }
+    return result
+}
+print(deleteWhiteSpaces(str: testStr))
+
+
+//given a string with multiple words. Write code that returns how many of them are palindromes
+let sampleInput = "danaerys dad cat civic bottle"
+
+func totalPalindromes(str: String) -> Int {
+    var counter = 0
+    let arr = str.components(separatedBy: " ")
+    for word in arr {
+        if word == String(word.reversed()) {
+            counter += 1
+        }
+    }
+    return counter
+}
+print(totalPalindromes(str: sampleInput))
+
+//find most common name
+let names = ["Emma","Olivia","Noah","Liam","Ava","Sophia",
+             "Emma","Olivia","James","Liam","Benjamin","Jacob","Emma"]
+
+let result = Dictionary(grouping: names){$0}.mapValues{ $0.count }
+print(result)
