@@ -50,13 +50,13 @@ public struct BinarySearchTree<T: Comparable> {
         root = insert(from: root, value: value)
     }
     
-    public mutating func remove(_ value: T) {
-//        root =
-    }
-    
-    private func remove(from node: BinaryNode<T>?, value: T) -> BinaryNode<T> {
-        
-    }
+//    public mutating func remove(_ value: T) {
+//        root = remove(from: root, value: value)
+//    }
+//
+//    private func remove(from node: BinaryNode<T>?, value: T) -> BinaryNode<T> {
+//        guard let node = node else { return BinaryNode(value) }
+//    }
     
     private func insert(from node: BinaryNode<T>?, value: T) -> BinaryNode<T> {
         //the tree is empty!
@@ -92,3 +92,19 @@ myTree.insert(26)
 myTree.insert(14)
 myTree.insert(42)
 myTree.printInOrderTraversall()
+
+func search(node: BinaryNode<Int>?, searchValue: Int) -> Bool {
+    guard let node = node else { return false }
+    if node.value == searchValue {
+        return true
+    } else if node.value > searchValue {
+        return search(node: node.leftChild, searchValue: searchValue)
+    } else {
+        return search(node: node.rightChild, searchValue: searchValue)
+    }
+}
+
+let node1 = BinaryNode(1)
+let node3 = BinaryNode(3)
+node1.rightChild = node3
+print(search(node: node1, searchValue: 3))
