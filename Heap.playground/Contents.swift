@@ -67,6 +67,21 @@ struct Heap<T> {
         self.sortingCriteria = sortingCriteria
     }
     
+    // Heapify initializer:
+    // takes in an unsorted array and creates a min-heap or max-heap
+    // based on sorting closure passed in e.g. < or >
+    init(_ arr: [T], sortingCriteria: @escaping (T, T) -> Bool) {
+        self.sortingCriteria = sortingCriteria
+        heapify(arr)
+    }
+    
+    private mutating func heapify(_ arr: [T]) {
+        elements = arr
+        for index in stride(from: (elements.count) / 2, through: 0, by: -1) {
+            shiftDown(index)
+        }
+    }
+    
     private func parentIndex(_ index: Int) -> Int {
         return (index - 1) / 2
     }
@@ -100,6 +115,38 @@ struct Heap<T> {
         elements[childIndex] = child
     }
     
+    public mutating func remove() -> T? {
+        //check for nil
+        guard !elements.isEmpty else { return nil }
+        
+        //case in which there is only 1 element in the heap
+        if elements.count == 1 {
+            return elements.removeFirst()
+        }
+        let value = elements[0] // save removal value to return
+        elements[0] = elements.removeLast() // overwrite root with last value and remove last
+        shiftDown(0) //shift the Heap down from the root while maintaining the Heap property
+        return value
+    }
+    
+    private mutating func shiftDown(_ index: Int) {
+        shiftDown(fromIndex: index, to: elements.count)
+    }
+    
+    private mutating func shiftDown(fromIndex index: Int, to endIndex: Int) {
+        let leftChildIndex = self.leftChildIndex(index)
+        let rightChildIndex = leftChildIndex + 1
+        
+        // first
+        var first = index // this is used to keep track as we walk down the tree
+        if leftChildIndex < endIndex && sortingCriteria(elements[leftChildIndex], elements[first]) {
+            first = rightChildIndex
+        }
+        if first == index { return }
+        elements.swapAt(first, index)
+        shiftDown(fromIndex: first, to: endIndex) //calling recursively until heap is intact
+    }
+    
 }
 
 var list = Heap<Int>(sortingCriteria: >)
@@ -114,4 +161,19 @@ print(list)
 
 list.insert(83)
 
+print(list)
 
+list.remove()
+
+print(list)
+
+
+//stride example
+let names = ["antonio", "jeff", "ibraheem", "li"]
+for index in stride(from: names.count - 1, through: 0, by: -1) {
+    print(names[index], terminator: " ")
+}
+print("")
+
+var newHeap = Heap<Int>([8,10,-3,11,23], sortingCriteria: >)
+print("heapify arrah: \(newHeap)")
