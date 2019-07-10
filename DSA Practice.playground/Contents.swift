@@ -109,3 +109,82 @@ let names = ["Emma","Olivia","Noah","Liam","Ava","Sophia",
 
 let result = Dictionary(grouping: names){$0}.mapValues{ $0.count }
 print(result)
+
+
+//change to military time
+let testStringTime = "07:05:45PM"
+func timeConversion(s: String) -> String {
+    var shadowString = s
+    shadowString.removeLast()
+    let amPm = String(shadowString.removeLast())
+    var timeAsArr = shadowString.components(separatedBy: ":")
+    var result = ""
+    if amPm == "P" {
+        let hour = Int(timeAsArr[0]) ?? 0
+        if hour < 12 {
+            timeAsArr[0] = String(hour + 12)
+        }
+    } else {
+        let hour = Int(timeAsArr[0]) ?? 0
+        if hour == 12 {
+            timeAsArr[0] = "00"
+        }
+    }
+    result = String(timeAsArr.flatMap{String($0)+":"})
+    result.removeLast()
+    return result
+}
+print(timeConversion(s: testStringTime))
+
+
+//reverse an array in place
+var array1 = [12,13,0,11,12,9,8,-1,-3]
+func reverseArray(_ arr: inout [Int]) -> [Int] {
+    var leftIndex = 0
+    var rightIndex = arr.count-1
+    while leftIndex < rightIndex  {
+        arr.swapAt(leftIndex, rightIndex)
+        leftIndex += 1
+        rightIndex -= 1
+    }
+    return arr
+}
+print(reverseArray(&array1))
+
+
+//sort a string but keeping the uppercase in place
+let inputStr = "InTrEPid!2" //output "dEIinPrT"
+func sortCorrectly(_ str: String) -> String {
+    var result = ""
+    for char in str {
+        if char.isLetter {
+            result.append(char)
+        }
+    }
+    return String(result.sorted{ String($0).lowercased() < String($1).lowercased() })
+}
+print(sortCorrectly(inputStr))
+
+
+//Hackerrank apples and oranges problem
+
+func countApplesAndOranges(s: Int, t: Int, a: Int, b: Int, apples: [Int], oranges: [Int]) -> Void {
+    let applesDistance = apples.map{ a + $0 }
+    let orangeDistance = oranges.map{ b + $0 }
+    var applesCounter = 0
+    var orangesCounter = 0
+    for apple in applesDistance {
+        if apple >= s && apple <= t {
+            applesCounter += 1
+        }
+    }
+    for orange in orangeDistance {
+        if orange >= s && orange <= t {
+            orangesCounter += 1
+        }
+    }
+    print(applesCounter)
+    print(orangesCounter)
+}
+
+countApplesAndOranges(s: 7, t: 11, a: 5, b: 15, apples: [-2, 2, 1], oranges: [5, -6])
