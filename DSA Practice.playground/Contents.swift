@@ -188,3 +188,30 @@ func countApplesAndOranges(s: Int, t: Int, a: Int, b: Int, apples: [Int], orange
 }
 
 countApplesAndOranges(s: 7, t: 11, a: 5, b: 15, apples: [-2, 2, 1], oranges: [5, -6])
+
+
+let inputArr2 = [1,2,3,2,1,2,2,2,2,3,1]
+
+func findKthNum(arr: [Int], k: Int) -> Int? {
+    let numSet = Set(arr)
+    guard k - 1 < numSet.count else { return nil }
+    var storageDict = [Int:Int]()
+    for num in arr {
+        if let numExists = storageDict[num] {
+            storageDict[num] = numExists + 1
+        } else {
+            storageDict[num] = 1
+        }
+    }
+    var storageTuple = [(num: Int, freq: Int)]()
+    for (num, freq) in storageDict {
+        let newTuple = (num: num, freq: freq)
+        storageTuple.append(newTuple)
+    }
+    storageTuple.sort{ $0.freq > $1.freq }
+    print(storageTuple)
+    return storageTuple[k-1].num
+}
+
+
+
